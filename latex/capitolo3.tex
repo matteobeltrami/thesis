@@ -1,0 +1,28 @@
+%\newpage
+
+\chapter{Conclusioni}
+\label{cha:conclusioni}
+%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed nunc orci. Aliquam nec nisl vitae sapien pulvinar dictum quis non urna. Suspendisse at dui a erat aliquam vestibulum. Quisque ultrices pellentesque pellentesque. Pellentesque egestas quam sed blandit tempus. Sed congue nec risus posuere euismod. Maecenas ut lacus id mauris sagittis egestas a eu dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque at ultrices tellus. Ut eu purus eget sem iaculis ultricies sed non lorem. Curabitur gravida dui eget ex vestibulum venenatis. Phasellus gravida tellus velit, non eleifend justo lobortis eget. 
+
+Come anticipato nel sommario, nell'ampio ambito degli algoritmi di machine learning assumono grande importanza gli applicativi scalabili che ben si adeguano alla vasta diversità di dispositivi con scarse risorse computazionali disponibili sul mercato. 
+Queste tipo di architetture rappresentano lo stato dell'arte per i modelli di apprendimento volti all'elaborazione delle immagini in quanto la loro flessibilità, data dai fattori di scala, semplifica il processo di adattamento delle reti alla piattaforma specifica di applicazione.
+
+Tuttavia non è ancora chiaro, o per lo meno non lo è nel caso della famiglia di reti delle PhiNets, quali siano i criteri per scegliere la configurazione dei fattori di scala che massimizzi le prestazioni del modello e soddisfi i vincoli computazionali imposti.
+
+Come visto nella sezione \ref{sec:phinet}, i fattori che modificano la struttura di rete di una PhiNet sono 4, ovvero \textit{$\alpha$, $\beta$, $t_{0}$, N}, che regolano rispettivamente la larghezza, la forma, il numero di canali ed il numero di layer rete. D'altra parte si hanno a disposizione solamente 3 vincoli (occupazione di memoria FLASH, occupazione di memoria RAM e consumo energetico) che aiutano a regolare tali iperparametri, c'è quindi la necessità di trovare una condizione ulteriore che aiuti a determinare gli iperparametri migliori. 
+
+Questa analisi ha mostrato come ci sia una chiara correlazione tra il numero di layer, il numero totale di parametri di una rete e le sue prestazioni ed è quindi un'informazione utlile per poter determinare a priori uno dei 4 fattori di scala. 
+In particolare si può vedere dalla figura \ref{fig:segmentation} come nell'intervallo di spazio di archiviazione di interesse, che va da circa 3KB (trentamila parametri) a 2MB (duemilioni di parametri), ci siano differenze nella scelta del numero di layer che ottimizza le performance di rete. Si può vedere facilmente come per un budget di numero di parametri inferiore a 2500 (che nel caso di codifica ad 8 bit per parametro corrisponde a 2.5KB) il numero di strati convolutivi migliore da scegliere è 4, ad ogni modo tale situazione è improbabile in un campo di applicazione reale dato che i dispositivi con vincoli di risorse così stringenti sono rari e che queste reti avrebbero un'accuratezza di classificazione molto bassa. Fino a circa diecimila parametri (corrispondenti a 10KB) è invece conveniente l'utilizzo di una PhiNet composta da 5 layers, utile ad esempio se si vuole implementare la classificazione di immagini su un dispositivo molto limitato come quelli della famiglia Arduino, mentre fino a circa un milione di parametri (1MB) la configurazione migliore risulta quella con 7 layers; questo ultimo risultato ricopre gran parte dei casi applicativi reali, dato che sono poche le piattaforme embedded che eccedono questo limite di spazio di archiviazione. Per quanto riguarda quelle reti che possiedono più di un milione di parametri invece, sembra esserci una dominanza di prestazioni per le PhiNet che possiedono 9 layers, tuttavia il vantaggio di accuratezza rispetto agli altri numeri di strati convolutivi sembra minimo.
+Tali risultati offrono quindi una guida utile alla configurazione del numero di strati convolutivi di una PhiNet, dato che solamente conoscendo il budget di memoria FLASH del dispositivo di applicazione è possibile determinare a priori il numero di layers che definiscono una PhiNet performante. 
+
+L'obiettivo di ricerca era tuttavia quello di determinare i 4 iperparametri che definiscono la rete migliore in termini di accuratezza e con le informazioni ora disponibili le decisioni di configurazione sono meno complesse.
+Rimanendo infatti gli stessi 3 vincoli (RAM, FLASH, operazioni) è ora più semplice scegliere i restanti 3 fattori di scala e ciò è fattibile seguendo la strategia di \textit{tuning} proposta nel paper di presentazione delle PhiNets \cite{10.1145/3510832}.
+
+\afterpage{\null\newpage}
+
+%\begin{itemize}
+%    \item riepilogo obietiivi 
+%    \item risultati principali
+%    \item verifica degli obiettivi 
+%    \item implicazioni 
+%\end{itemize}
